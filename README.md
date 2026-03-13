@@ -14,12 +14,14 @@ It wraps [yabai](https://github.com/koekeishiya/yabai) and [skhd](https://github
 
 ## Install
 
-### Prerequisites
-
 ```sh
-brew install koekeishiya/formulae/yabai
-brew install koekeishiya/formulae/skhd
+brew tap alarcritty/vimwm
+brew install vimwm
 ```
+
+This installs vimwm along with yabai and skhd as dependencies. Swift helpers are compiled automatically on first `vimwm start`.
+
+### Setup
 
 yabai requires SIP to be partially disabled. Boot into Recovery Mode (hold power button on Apple Silicon, or Cmd+R on Intel), open Terminal, and run:
 
@@ -47,26 +49,16 @@ Add this line (replace `<user>` with your username and update the hash):
 
 Get the hash with: `shasum -a 256 $(which yabai)`
 
+Grant accessibility permissions: System Settings > Privacy & Security > Accessibility > enable your terminal app.
+
 ### Build from source
 
 ```sh
-git clone https://github.com/youruser/vimwm.git
+git clone https://github.com/alarcritty/vimwm.git
 cd vimwm
 cargo build --release
 cp target/release/vimwm ~/.cargo/bin/
-
-# build the swift helpers
-cd ~/.config/vimwm
-swiftc -O -o key key.swift
-swiftc -O -o click click.swift
-swiftc -O -o cursor cursor.swift
-swiftc -O -o scroll scroll.swift
-swiftc -O -o mouseblock mouseblock.swift
 ```
-
-### Grant permissions
-
-System Settings > Privacy & Security > Accessibility > enable your terminal app.
 
 ## Usage
 
