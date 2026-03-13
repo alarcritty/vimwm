@@ -6,10 +6,12 @@ mod spaces;
 use crate::config::{self, load_config, save_config, ensure_config, config_path};
 use crate::daemon;
 use crate::generators;
+use crate::helpers;
 use std::io::{self, Result};
 
 pub fn start() -> Result<()> {
     ensure_config()?;
+    helpers::ensure_helpers()?;
 
     if daemon::is_running() {
         println!("vimwm is already running");

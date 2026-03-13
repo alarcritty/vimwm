@@ -3,6 +3,7 @@ mod commands;
 mod config;
 mod daemon;
 mod generators;
+mod helpers;
 
 use cli::{Cli, Command};
 use clap::Parser;
