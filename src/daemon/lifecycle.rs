@@ -59,6 +59,12 @@ pub fn reload_daemon() -> Result<()> {
         .output()
         .map_err(|e| io::Error::new(io::ErrorKind::Other, format!("failed to reload skhd: {e}")))?;
 
+    thread::sleep(Duration::from_millis(500));
+
+    let _ = Command::new("yabai")
+        .args(["-m", "space", "--balance"])
+        .output();
+
     Ok(())
 }
 fn check_dependency(name: &str) -> Result<()> {
