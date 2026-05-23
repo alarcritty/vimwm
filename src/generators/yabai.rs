@@ -46,7 +46,7 @@ pub fn generate_yabairc(cfg: &Config) -> Result<()> {
         if cfg.window_opacity { "on" } else { "off" }
     ));
 
-    rc.push_str("yabai -m config auto_balance off\n");
+    rc.push_str("yabai -m config auto_balance on\n");
     rc.push_str("yabai -m config window_placement second_child\n");
 
     if !cfg.external_bar.is_empty() {
