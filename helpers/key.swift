@@ -20,10 +20,33 @@ for i in 2..<args.count {
 
 let src = CGEventSource(stateID: .hidSystemState)
 
+let heldFlags = CGEventSource.flagsState(.combinedSessionState)
+let modKeys: [(CGEventFlags, CGKeyCode)] = [
+    (.maskShift, 56),
+    (.maskCommand, 55),
+    (.maskAlternate, 58),
+    (.maskControl, 59),
+]
+let toRelease = modKeys.filter { (mask, _) in
+    heldFlags.contains(mask) && !flags.contains(mask)
+}
+
+for (_, code) in toRelease {
+    if let e = CGEvent(keyboardEventSource: src, virtualKey: code, keyDown: false) {
+        e.post(tap: .cghidEventTap)
+    }
+}
+
 if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true),
    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false) {
     keyDown.flags = flags
     keyUp.flags = flags
     keyDown.post(tap: .cghidEventTap)
     keyUp.post(tap: .cghidEventTap)
+}
+
+for (_, code) in toRelease {
+    if let e = CGEvent(keyboardEventSource: src, virtualKey: code, keyDown: true) {
+        e.post(tap: .cghidEventTap)
+    }
 }
